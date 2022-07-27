@@ -5,7 +5,7 @@ import torch
 from transformers import AutoTokenizer
 
 # 加载分词器
-tokenizer = AutoTokenizer.from_pretrained('hfl/rbt6')
+tokenizer = AutoTokenizer.from_pretrained('hfl/rbt6',force_download=False)
 
 
 # 获取 word与label对应list
@@ -45,8 +45,8 @@ class Dataset(torch.utils.data.Dataset):
     def __init__(self):
         _, self.label2id, _ = get_label()
         # 先给一个 数据量少的默认值 dev
-        self.dataset = get_words_labels(DEV_SAMPLE_PATH)
-        print(' ')
+        self.dataset = get_words_labels(TRAIN_SAMPLE_PATH)
+        # print(' ')
 
     def __len__(self):
         return len(self.dataset[0])
@@ -72,8 +72,8 @@ def collate_fn(data):
 
     lens = inputs['input_ids'].shape[1]
     for i in range(len(labels)):
-        labels[i] = [len(label2id)-1] + labels[i]
-        labels[i] += [len(label2id)-1] * lens
+        labels[i] = [len(label2id)] + labels[i]
+        labels[i] += [len(label2id)] * lens
         labels[i] = labels[i][:lens]
     return inputs.to(device), torch.LongTensor(labels).to(device)
 

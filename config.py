@@ -6,3 +6,6 @@ LABEL_PATH = './output/label.text'
 
 import torch
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+TARGET_SIZE = 29
+# 设小一点 意思一下
+DROPOUT_PROB = 0.1
