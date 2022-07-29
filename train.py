@@ -6,11 +6,12 @@ from model import *
 
 dataset = Dataset()
 loader = torch.utils.data.DataLoader(dataset=dataset,
-                                     batch_size=8,
+                                     batch_size=1,
                                      collate_fn=collate_fn
 )
 
-model = BertCrfModel()
+# model = BertCrfModel()
+model = BertLSTMCrfModel()
 model.to(device)
 model.fine_tune(True)
 model.train()
